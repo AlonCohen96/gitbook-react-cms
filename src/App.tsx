@@ -1,46 +1,29 @@
 import './App.css'
+import {useState} from "react";
 
 function App() {
 
-  return (
-      <div id='site-container'>
-        <h2>Projects</h2>
-        <ul>
-          <li data-id='web-annotation-interface'>
-            <div>
-              <p>Annotation Web Interface</p>
-              <button>
-                ➤
-              </button>
-            </div>
-            <iframe
-                id='web-annotation-interface'
-                src='https://nccr-liri.gitbook.io/annotation-web-interface-docs/'
-                width='100%'
-                height='1000px'
-                frameBorder='0'
-                allowFullScreen
-            ></iframe>
-          </li>
+  const [projects, setProjects] = useState([
+      {
+        name: 'Annotation Web Interface',
+        link: 'https://nccr-liri.gitbook.io/annotation-web-interface-docs/'
+      }
+  ])
 
-          <li data-id='another-project'>
-            <div>
-              <p>Another Project</p>
-              <button>
-                ➤
-              </button>
-            </div>
+  return (
+      <>
+        {projects.map(project =>
+          <div>
+            {project.name}
             <iframe
-                id='another-project'
-                src='https://nccr-liri.gitbook.io/annotation-web-interface-docs/'
+                src={project.link}
                 width='100%'
                 height='1000px'
-                frameBorder='0'
                 allowFullScreen
             ></iframe>
-          </li>
-        </ul>
-      </div>
+          </div>
+        )}
+      </>
   )
 }
 
