@@ -49,9 +49,7 @@ function App() {
 
     useEffect(() => {
         const resizeObserver = new ResizeObserver(() => {
-            //const newHeight = document.documentElement.scrollHeight;
-            const projectsContainer = document.getElementById('projects-container')
-            const newHeight = projectsContainer?.scrollHeight + 200; // Change to body height
+            const newHeight = document.documentElement.scrollHeight;
             window.parent.postMessage({ type: 'resize', height: newHeight }, '*');
         });
 
