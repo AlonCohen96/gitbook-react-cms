@@ -41,7 +41,7 @@ function App() {
             const newHeight = projectsContainer?.scrollHeight; // Change to body height
             console.log('New height after toggle: ' + newHeight);
             window.parent.postMessage({ type: 'resize', height: newHeight }, '*');
-        }, 200);
+        }, 0);
     };
 
 
