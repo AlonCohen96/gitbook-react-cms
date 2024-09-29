@@ -24,7 +24,7 @@ function App() {
         }
     ]);
 
-    const toggleGitbook = (projectId) => {
+    const toggleGitbook = (projectId: string) => {
         const updatedProjects = projects.map(project => {
             if (projectId === project.id) {
                 return { ...project, visible: !project.visible };
