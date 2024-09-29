@@ -50,8 +50,14 @@ function App() {
         };
     }, []);
 
+    const setHeightTo280 = () => {
+        document.body.style.height = '280px'; // Set body height to 280 pixels
+        console.log('Height set to 280 pixels'); // Log for verification
+    };
+
   return (
       <>
+          <button onClick={setHeightTo280}>Set Height to 280px</button> {/* Testing Button */}
         {projects.map(project =>
           <div key={project.id}>
             {project.name}
