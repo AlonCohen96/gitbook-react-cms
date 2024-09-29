@@ -46,7 +46,7 @@ function App() {
 
     useEffect(() => {
         const resizeObserver = new ResizeObserver(() => {
-            //const newHeight = document.documentElement.scrollHeight;
+            const newHeight = document.documentElement.scrollHeight;
             //window.parent.postMessage({ type: 'resize', height: newHeight }, '*');
         });
 
