@@ -51,7 +51,7 @@ function App() {
     }, []);
 
     const setHeightTo280 = () => {
-        document.body.style.height = '280px'; // Set body height to 280 pixels
+        window.parent.postMessage({ type: 'resize', height: 280 }, '*');
     };
 
   return (
