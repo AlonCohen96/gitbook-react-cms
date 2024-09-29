@@ -1,5 +1,6 @@
 import './App.css'
 import {useState} from "react";
+import {nanoid} from "nanoid";
 
 function App() {
 
@@ -13,14 +14,18 @@ function App() {
   return (
       <>
         {projects.map(project =>
-          <div>
+          <div key={nanoid()}>
             {project.name}
             <iframe
                 src={project.link}
                 width='100%'
                 height='1000px'
                 allowFullScreen
-            ></iframe>
+            >
+            </iframe>
+            <button onClick={() => setProjects([])}>
+              don't click me yet
+            </button>
           </div>
         )}
       </>
