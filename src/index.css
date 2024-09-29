@@ -1,5 +1,5 @@
 #projects-container {
-  border: none;
-  overflow: hidden; /* This prevents the scrollbar from appearing inside the iframe */
+  width: 500px;
   height: 500px;
+  border: 1px solid green;
 }
