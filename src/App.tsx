@@ -35,21 +35,17 @@ function App() {
         setProjects(updatedProjects)
     }
 
-    // Function to send the height of the document to the parent window
-    const updateParentWithHeight = () => {
-        const height = document.documentElement.scrollHeight; // Get the full height of the document
-        window.parent.postMessage({ type: 'resize', height }, '*'); // Send height to the parent window
-    };
-
     useEffect(() => {
-        // Update the height when the component mounts
-        updateParentWithHeight();
+        const resizeObserver = new ResizeObserver(() => {
+            const height = document.documentElement.scrollHeight;
+            window.parent.postMessage({ type: 'resize', height }, '*');
+        });
 
-        // Optional: You can add listeners if your content height changes dynamically
-        window.addEventListener('resize', updateParentWithHeight);
+        resizeObserver.observe(document.body); // Observe the body for any height changes
 
-        // Clean up the event listener when the component unmounts
-        return () => window.removeEventListener('resize', updateParentWithHeight);
+        return () => {
+            resizeObserver.disconnect(); // Clean up observer on component unmount
+        };
     }, []);
 
   return (
