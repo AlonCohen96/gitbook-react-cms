@@ -36,11 +36,13 @@ function App() {
 
         // Trigger height adjustment after state update
         setTimeout(() => {
-            const newHeight = document.documentElement.scrollHeight; // Get updated height
-            console.log('baba ' + newHeight)
-            window.parent.postMessage({ type: 'resize', height: newHeight }, '*'); // Post new height
-        }, 0); // Timeout to ensure DOM updates before checking height
-    }
+            // Adjusted to check for the body height
+            const newHeight = document.body.scrollHeight; // Change to body height
+            console.log('New height after toggle: ' + newHeight);
+            window.parent.postMessage({ type: 'resize', height: newHeight }, '*');
+        }, 0);
+    };
+
 
     useEffect(() => {
         const resizeObserver = new ResizeObserver(() => {
