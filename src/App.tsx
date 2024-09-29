@@ -40,7 +40,7 @@ function App() {
             const newHeight = document.body.scrollHeight; // Change to body height
             console.log('New height after toggle: ' + newHeight);
             window.parent.postMessage({ type: 'resize', height: newHeight }, '*');
-        }, 0);
+        }, 200);
     };
 
 
