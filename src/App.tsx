@@ -33,7 +33,7 @@ function App() {
         });
 
         setProjects(updatedProjects);
-
+/*
         // Trigger height adjustment after state update
         setTimeout(() => {
             // Adjusted to check for the body height
@@ -42,32 +42,29 @@ function App() {
             console.log('New height after toggle: ' + newHeight);
             window.parent.postMessage({ type: 'resize', height: newHeight }, '*');
         }, 0);
+
+ */
     };
 
 
     useEffect(() => {
         const resizeObserver = new ResizeObserver(() => {
-            const newHeight = document.documentElement.scrollHeight;
-            console.log('New Height:', newHeight);
+            //const newHeight = document.documentElement.scrollHeight;
+            const projectsContainer = document.getElementById('projects-container')
+            const newHeight = projectsContainer?.scrollHeight; // Change to body height
             window.parent.postMessage({ type: 'resize', height: newHeight }, '*');
         });
 
-        resizeObserver.observe(document.body); // Observe changes in the body of the document
+        resizeObserver.observe(document.body);
 
         return () => {
-            resizeObserver.disconnect(); // Clean up observer on component unmount
+            resizeObserver.disconnect();
         };
-    }, []); // Empty dependency array to run once on mount
+    }, []);
 
-    const setHeightTo280 = () => {
-        document.body.style.height = '280px'; // Set body height to 280 pixels for testing
-        const newHeight = document.documentElement.scrollHeight;
-        window.parent.postMessage({ type: 'resize', height: newHeight }, '*');
-    };
 
     return (
         <div id='projects-container'>
-            <button onClick={setHeightTo280}>Set Height to 280px</button> {/* Testing Button */}
             {projects.map(project => (
                 <div key={project.id}>
                     <p>{project.name}</p>
