@@ -1,5 +1,5 @@
 import './App.css';
-import {  useState } from "react";
+import { useEffect, useState } from "react";
 import { nanoid } from "nanoid";
 
 function App() {
@@ -35,9 +35,27 @@ function App() {
         setProjects(updatedProjects);
         // Trigger height adjustment after state update
 
+        setTimeout(() => {
+            // Adjusted to check for the body height
+            const projectsContainer = document.getElementById('projects-container')
+            const newHeight = projectsContainer?.scrollHeight; // Change to body height
+            window.parent.postMessage({ type: 'resize', height: newHeight }, '*');
+        }, 0);
     };
 
 
+    useEffect(() => {
+        const resizeObserver = new ResizeObserver(() => {
+            const newHeight = document.documentElement.scrollHeight;
+            window.parent.postMessage({ type: 'resize', height: newHeight }, '*');
+        });
+
+        resizeObserver.observe(document.body);
+
+        return () => {
+            resizeObserver.disconnect();
+        };
+    }, []);
 
 
     return (
