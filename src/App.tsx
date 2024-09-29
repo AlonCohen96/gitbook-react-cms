@@ -1,5 +1,5 @@
 import './App.css';
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { nanoid } from "nanoid";
 
 function App() {
@@ -44,18 +44,6 @@ function App() {
     };
 
 
-    useEffect(() => {
-        const resizeObserver = new ResizeObserver(() => {
-            const newHeight = document.documentElement.scrollHeight;
-            window.parent.postMessage({ type: 'resize', height: newHeight }, '*');
-        });
-
-        resizeObserver.observe(document.body);
-
-        return () => {
-            resizeObserver.disconnect();
-        };
-    }, []);
 
 
     return (
