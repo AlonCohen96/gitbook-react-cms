@@ -1,6 +1,5 @@
-import React, { StrictMode } from 'react'
-import ReactDOM from 'react-dom';
-import { createRoot } from 'react-dom/client'
+import React from 'react'
+import ReactDOM from 'react-dom/client';
 import reactToWebComponent from 'react-to-webcomponent';
 import App from './App.tsx'
 import './index.css'
@@ -11,8 +10,12 @@ const AppWebComponent = reactToWebComponent(App, React, ReactDOM);
 // Define the new custom element
 customElements.define('app-web-component', AppWebComponent);
 
-createRoot(document.getElementById('root')!).render(
-  <StrictMode>
-    <App />
-  </StrictMode>,
-)
+const rootElement = document.getElementById('root');
+if (rootElement) {
+    const root = ReactDOM.createRoot(rootElement);  // createRoot for React 18+
+    root.render(
+        <React.StrictMode>
+            <App />
+        </React.StrictMode>
+    );
+}
