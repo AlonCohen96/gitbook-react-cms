@@ -38,6 +38,7 @@ function App() {
 
     return (
         <div id='projects-container'>
+            <h2>SOMETHING</h2>
             {projects.map(project => (
                 <div key={project.id}>
                     <p>{project.name}</p>
