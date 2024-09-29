@@ -37,7 +37,8 @@ function App() {
         // Trigger height adjustment after state update
         setTimeout(() => {
             // Adjusted to check for the body height
-            const newHeight = document.getElementById('projects-container').scrollHeight; // Change to body height
+            const projectsContainer = document.getElementById('projects-container')
+            const newHeight = projectsContainer?.scrollHeight; // Change to body height
             console.log('New height after toggle: ' + newHeight);
             window.parent.postMessage({ type: 'resize', height: newHeight }, '*');
         }, 200);
