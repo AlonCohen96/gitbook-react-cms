@@ -37,7 +37,7 @@ function App() {
         // Trigger height adjustment after state update
         setTimeout(() => {
             // Adjusted to check for the body height
-            const newHeight = document.body.scrollHeight; // Change to body height
+            const newHeight = document.getElementById('projects-container').scrollHeight; // Change to body height
             console.log('New height after toggle: ' + newHeight);
             window.parent.postMessage({ type: 'resize', height: newHeight }, '*');
         }, 200);
@@ -65,7 +65,7 @@ function App() {
     };
 
     return (
-        <>
+        <div id='projects-container'>
             <button onClick={setHeightTo280}>Set Height to 280px</button> {/* Testing Button */}
             {projects.map(project => (
                 <div key={project.id}>
@@ -84,7 +84,7 @@ function App() {
                     </button>
                 </div>
             ))}
-        </>
+        </div>
     );
 }
 
