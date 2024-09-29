@@ -37,11 +37,12 @@ function App() {
 
     useEffect(() => {
         const resizeObserver = new ResizeObserver(() => {
-            const height = document.documentElement.scrollHeight;
-            window.parent.postMessage({ type: 'resize', height }, '*');
+            const newHeight = document.documentElement.scrollHeight;
+            window.parent.postMessage({ type: 'resize', height: newHeight }, '*');
         });
 
-        resizeObserver.observe(document.body); // Observe the body for any height changes
+        // Observe changes in the body of the document
+        resizeObserver.observe(document.body);
 
         return () => {
             resizeObserver.disconnect(); // Clean up observer on component unmount
