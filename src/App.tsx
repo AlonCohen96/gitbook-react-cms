@@ -37,6 +37,7 @@ function App() {
         // Trigger height adjustment after state update
         setTimeout(() => {
             const newHeight = document.documentElement.scrollHeight; // Get updated height
+            console.log('baba ' + newHeight)
             window.parent.postMessage({ type: 'resize', height: newHeight }, '*'); // Post new height
         }, 0); // Timeout to ensure DOM updates before checking height
     }
