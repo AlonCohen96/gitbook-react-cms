@@ -1,5 +1,5 @@
 import './App.css'
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import {nanoid} from "nanoid";
 
 function App() {
@@ -34,6 +34,23 @@ function App() {
           })
         setProjects(updatedProjects)
     }
+
+    // Function to send the height of the document to the parent window
+    const updateParentWithHeight = () => {
+        const height = document.documentElement.scrollHeight; // Get the full height of the document
+        window.parent.postMessage({ type: 'resize', height }, '*'); // Send height to the parent window
+    };
+
+    useEffect(() => {
+        // Update the height when the component mounts
+        updateParentWithHeight();
+
+        // Optional: You can add listeners if your content height changes dynamically
+        window.addEventListener('resize', updateParentWithHeight);
+
+        // Clean up the event listener when the component unmounts
+        return () => window.removeEventListener('resize', updateParentWithHeight);
+    }, []);
 
   return (
       <>
