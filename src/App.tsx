@@ -33,6 +33,13 @@ function App() {
         });
 
         setProjects(updatedProjects);
+        // Trigger height adjustment after state update
+        setTimeout(() => {
+            // Adjusted to check for the body height
+            const projectsContainer = document.getElementById('projects-container')
+            const newHeight = projectsContainer?.scrollHeight; // Change to body height
+            window.parent.postMessage({ type: 'resize', height: newHeight }, '*');
+        }, 0);
     };
 
 
