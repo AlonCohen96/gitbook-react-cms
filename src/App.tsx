@@ -1,5 +1,5 @@
 import './App.css';
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { nanoid } from "nanoid";
 
 function App() {
@@ -33,12 +33,25 @@ function App() {
         });
 
         setProjects(updatedProjects);
-
     };
+
+
+    useEffect(() => {
+        const resizeObserver = new ResizeObserver(() => {
+            const newHeight = document.documentElement.scrollHeight;
+            window.parent.postMessage({ type: 'resize', height: newHeight }, '*');
+        });
+
+        resizeObserver.observe(document.body);
+
+        return () => {
+            resizeObserver.disconnect();
+        };
+    }, []);
+
 
     return (
         <div id='projects-container'>
-            <h2>SOMETHING</h2>
             {projects.map(project => (
                 <div key={project.id}>
                     <p>{project.name}</p>
