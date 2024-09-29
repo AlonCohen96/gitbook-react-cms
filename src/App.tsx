@@ -48,10 +48,11 @@ function App() {
         return () => {
             resizeObserver.disconnect(); // Clean up observer on component unmount
         };
-    }, []);
+    }, [projects]);
 
     const setHeightTo280 = () => {
-        window.parent.postMessage({ type: 'resize', height: 280 }, '*');
+        const newHeight = document.documentElement.scrollHeight;
+        window.parent.postMessage({ type: 'resize', height: newHeight }, '*');
     };
 
   return (
