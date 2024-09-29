@@ -15,9 +15,7 @@ if (rootElement) {
     const root = ReactDOM.createRoot(rootElement);  // createRoot for React 18+
     root.render(
         <React.StrictMode>
-            <div id='app-container'>
                 <App />
-            </div>
         </React.StrictMode>
     );
 }

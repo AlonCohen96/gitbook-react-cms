@@ -1,5 +1,4 @@
-#app-container {
-  width: 500px;
-  height: 500px;
-  border: 1px solid green;
+#projects-container {
+  border: none;
+  overflow: hidden; /* This prevents the scrollbar from appearing inside the iframe */
 }
