@@ -1,0 +1,5 @@
+[[redirects]]
+  from = "/assets/index.js"
+  to = "/assets/index-:hash.js"
+  status = 200
+  force = true
