@@ -1,5 +1,0 @@
-[[redirects]]
-  from = "/assets/index.js"
-  to = "/assets/index-*:hash.js"  # Use wildcard for hashed filename
-  status = 200
-  force = true
