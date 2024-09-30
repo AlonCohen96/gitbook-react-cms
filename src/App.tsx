@@ -39,7 +39,6 @@ function App() {
             // Adjusted to check for the body height
             const projectsContainer = document.getElementById('projects-container')
             const newHeight = projectsContainer?.scrollHeight; // Change to body height
-            console.log(newHeight)
             window.parent.postMessage({ type: 'resize', height: newHeight }, '*');
         }, 0);
     };
