@@ -5,6 +5,7 @@ import react from '@vitejs/plugin-react'
 export default defineConfig({
   plugins: [react()],
   build: {
+    outDir: 'dist/assets',  // Set the output directory to 'dist/assets'
     rollupOptions: {
       output: {
         entryFileNames: 'index.js',  // Fixed name for the main entry file
@@ -14,3 +15,4 @@ export default defineConfig({
     },
   },
 })
+
