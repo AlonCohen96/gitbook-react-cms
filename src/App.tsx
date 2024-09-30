@@ -1,5 +1,5 @@
 import './App.css';
-import { useEffect, useState } from "react";
+import {useEffect, useRef, useState} from "react";
 import { nanoid } from "nanoid";
 
 function App() {
@@ -23,6 +23,7 @@ function App() {
             visible: false,
         }
     ]);
+    const projectsContainerRef = useRef<HTMLDivElement | null>(null)
 
     const toggleGitbook = (projectId: string) => {
         const updatedProjects = projects.map(project => {
@@ -33,11 +34,11 @@ function App() {
         });
 
         setProjects(updatedProjects);
-        // Trigger height adjustment after state update
 
+        // Trigger height adjustment after state update
         setTimeout(() => {
             // Adjusted to check for the body height
-            const projectsContainer = document.getElementById('projects-container')
+            const projectsContainer = projectsContainerRef.current
             const newHeight = projectsContainer?.scrollHeight; // Change to body height
             window.parent.postMessage({ type: 'resize', height: newHeight }, '*');
         }, 0);
@@ -59,7 +60,7 @@ function App() {
 
 
     return (
-        <div id='projects-container'>
+        <div ref={projectsContainerRef}>
             {projects.map(project => (
                 <div key={project.id}>
                     <p>{project.name}</p>
