@@ -1,8 +1,3 @@
-#all-projects {
-  border: none;
-  overflow: hidden; /* This prevents the scrollbar from appearing inside the iframe */
-}
-
 
 .project-container {
 }
@@ -18,4 +13,9 @@
 .project-btn{
   background: none;
   border: none;
+}
+
+iframe{
+  width: 100%;
+  height: 80vh;
 }

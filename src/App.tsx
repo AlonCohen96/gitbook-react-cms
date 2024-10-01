@@ -24,17 +24,16 @@ function App() {
         }
     ]);
 
-    const toggleGitbook = (projectId: string) => {
+    const toggleGitbookVisibility = (projectId: string) => {
         const updatedProjects = projects.map(project => {
             if (projectId === project.id) {
                 return { ...project, visible: !project.visible };
             }
-            return project;
+            return {...project, visible: false};
         });
 
         setProjects(updatedProjects);
     };
-
 
     return (
         <div id='all-projects'>
@@ -56,7 +55,7 @@ function App() {
                         </p>
                         <button
                             className='project-btn'
-                            onClick={() => toggleGitbook(project.id)}
+                            onClick={() => toggleGitbookVisibility(project.id)}
                         >
                             {project.visible ? '▼' : '▶'}
                         </button>
@@ -64,8 +63,7 @@ function App() {
                     {project.visible && (
                         <iframe
                             src={project.url}
-                            width='100%'
-                            height='500px'
+
                             allowFullScreen
                         />
                     )}
