@@ -42,6 +42,12 @@ function App() {
         setSearchbarInput(inputValue);
     };
 
+    // Filter projects based on search input
+    const filteredProjects = projects.filter(project =>
+        searchbarInput === '' ||
+        project.name.toLowerCase().includes(searchbarInput.toLowerCase())
+    );
+
     return (
         <div id='app-container'>
             <h1 className='site-header'>LiRI Resources Hub</h1>
@@ -52,12 +58,8 @@ function App() {
                 placeholder="Search projects"
             />
             {
-                projects
-                    .filter(project =>
-                        searchbarInput === '' ||
-                        project.name.toLowerCase().includes(searchbarInput.toLowerCase())
-                    )
-                    .map(project => (
+                filteredProjects.length > 0 ? (
+                    filteredProjects.map(project => (
                         <div key={project.id} className='project-container'>
                             <div className='name-and-button-container'>
                                 <p>{project.name}</p>
@@ -76,6 +78,9 @@ function App() {
                             )}
                         </div>
                     ))
+                ) : (
+                    <p className='project-not-found-message'>No projects found.</p>
+                )
             }
         </div>
     );
