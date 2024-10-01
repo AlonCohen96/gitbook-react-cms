@@ -1,4 +1,21 @@
-#projects-container {
+#all-projects {
   border: none;
   overflow: hidden; /* This prevents the scrollbar from appearing inside the iframe */
+}
+
+
+.project-container {
+}
+
+.name-and-button-container{
+  display: flex;
+}
+
+.projects-header{
+  width: fit-content;
+}
+
+.project-btn{
+  background: none;
+  border: none;
 }

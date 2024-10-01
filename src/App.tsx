@@ -6,19 +6,19 @@ function App() {
     const [projects, setProjects] = useState([
         {
             name: 'Annotation Web Interface',
-            link: 'https://nccr-liri.gitbook.io/annotation-web-interface-docs/',
+            url: 'https://nccr-liri.gitbook.io/annotation-web-interface-docs/',
             id: nanoid(),
             visible: false,
         },
         {
             name: 'Project 2',
-            link: 'https://nccr-liri.gitbook.io/annotation-web-interface-docs/',
+            url: 'https://nccr-liri.gitbook.io/annotation-web-interface-docs/',
             id: nanoid(),
             visible: false,
         },
         {
             name: 'Project 3',
-            link: 'https://nccr-liri.gitbook.io/annotation-web-interface-docs/',
+            url: 'https://nccr-liri.gitbook.io/annotation-web-interface-docs/',
             id: nanoid(),
             visible: false,
         }
@@ -37,22 +37,38 @@ function App() {
 
 
     return (
-        <div id='projects-container'>
+        <div id='all-projects'>
+            <h1
+                className='projects-header'
+            >
+                Projects
+            </h1>
             {projects.map(project => (
-                <div key={project.id}>
-                    <p>{project.name}</p>
+                <div
+                    key={project.id}
+                    className='project-container'
+                >
+                    <div
+                        className='name-and-button-container'
+                    >
+                        <p>
+                            {project.name}
+                        </p>
+                        <button
+                            className='project-btn'
+                            onClick={() => toggleGitbook(project.id)}
+                        >
+                            {project.visible ? '▼' : '▶'}
+                        </button>
+                    </div>
                     {project.visible && (
                         <iframe
-                            src={project.link}
+                            src={project.url}
                             width='100%'
                             height='500px'
                             allowFullScreen
-                        >
-                        </iframe>
+                        />
                     )}
-                    <button onClick={() => toggleGitbook(project.id)}>
-                        Show/Hide Gitbook
-                    </button>
                 </div>
             ))}
         </div>
