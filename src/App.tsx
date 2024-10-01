@@ -63,7 +63,6 @@ function App() {
                     {project.visible && (
                         <iframe
                             src={project.url}
-
                             allowFullScreen
                         />
                     )}
