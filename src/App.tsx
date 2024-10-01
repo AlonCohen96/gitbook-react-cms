@@ -36,11 +36,11 @@ function App() {
     };
 
     return (
-        <div id='all-projects'>
+        <div id='app-container'>
             <h1
-                className='projects-header'
+                className='site-header'
             >
-                Projects
+                LiRI Resources Hub
             </h1>
             {projects.map(project => (
                 <div

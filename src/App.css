@@ -1,16 +1,20 @@
-.name-and-button-container{
-  display: flex;
-  flex-direction: row;
+#app-container{
+  margin: 0 10%;
 }
 
-.projects-header{
+.name-and-button-container{
+  display: flex;
+  align-items: flex-start;
+}
+
+.site-header{
   width: fit-content;
-  color: red;
 }
 
 .project-btn{
   background: none;
   border: none;
+  margin: 0 0 0 7px;
 }
 
 iframe{
