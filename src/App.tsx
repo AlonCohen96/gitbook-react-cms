@@ -2,6 +2,10 @@ import './App.css';
 import React, { useState } from "react";
 import { nanoid } from "nanoid";
 
+/*
+* Goal: When clicking on project, the project list should disappear and instead only display the gitbook, and a button to return to the list
+* */
+
 function App() {
     const [projects, setProjects] = useState([
         {
@@ -23,6 +27,8 @@ function App() {
             visible: false,
         }
     ]);
+
+    const visibleProjectId = projects.find(project => project.visible)?.id || null;
 
     const [searchbarInput, setSearchbarInput] = useState('');
 
@@ -59,29 +65,52 @@ function App() {
             />
             {
                 filteredProjects.length > 0 ? (
-                    filteredProjects.map(project => (
-                        <div key={project.id} className='project-container'>
-                            <div className='name-and-button-container'>
-                                <p>{project.name}</p>
-                                <button
-                                    className='project-btn'
-                                    onClick={() => toggleGitbookVisibility(project.id)}
-                                >
-                                    {project.visible ? '▼' : '▶'}
-                                </button>
-                            </div>
-                            {project.visible && (
-                                <iframe
-                                    src={project.url}
-                                    allowFullScreen
-                                />
-                            )}
-                        </div>
-                    ))
+                    filteredProjects.map(project => {
+                        // If no project is visible, render all projects without the iframe
+                        if (!visibleProjectId) {
+                            return (
+                                <div key={project.id} className='project-container'>
+                                    <div className='name-and-button-container'>
+                                        <p>{project.name}</p>
+                                        <button
+                                            className='project-btn'
+                                            onClick={() => toggleGitbookVisibility(project.id)}
+                                        >
+                                            {project.visible ? '▼' : '▶'}
+                                        </button>
+                                    </div>
+                                </div>
+                            );
+                        }
+                        // If a specific project is visible, render only that project with the iframe
+                        if (visibleProjectId === project.id) {
+                            return (
+                                <div key={project.id} className='project-container'>
+                                    <div className='name-and-button-container'>
+                                        <p>{project.name}</p>
+                                        <button
+                                            className='project-btn'
+                                            onClick={() => toggleGitbookVisibility(project.id)}
+                                        >
+                                            {project.visible ? '▼' : '▶'}
+                                        </button>
+                                    </div>
+                                    {project.visible && (
+                                        <iframe
+                                            src={project.url}
+                                            allowFullScreen
+                                        />
+                                    )}
+                                </div>
+                            );
+                        }
+                        return null; // Skip rendering other projects when a specific project is visible
+                    })
                 ) : (
                     <p className='project-not-found-message'>No projects found.</p>
                 )
             }
+
         </div>
     );
 }
