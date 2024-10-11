@@ -51,7 +51,7 @@ function App() {
     const visibleProject = projects.find(project => project.visible);
     const [searchbarInput, setSearchbarInput] = useState('');
 
-    const toggleGitbookVisibility = (projectId) => {
+    const toggleGitbookVisibility = (projectId: string) => {
         setProjects(projects.map(project =>
             project.id === projectId
                 ? { ...project, visible: !project.visible }
@@ -64,7 +64,7 @@ function App() {
         setProjects(projects.map(project => ({ ...project, visible: false })));
     };
 
-    const handleInputChange = (event) => {
+    const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const inputValue = event.target.value;
         setSearchbarInput(inputValue);
     };
