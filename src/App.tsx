@@ -2,48 +2,69 @@ import './App.css';
 import React, { useState } from "react";
 import { nanoid } from "nanoid";
 
-/*
-* Goal: When clicking on project, the project list should disappear and instead only display the gitbook, and a button to return to the list
-* */
-
 function App() {
     const [projects, setProjects] = useState([
         {
             name: 'Annotation Web Interface',
             url: 'https://nccr-liri.gitbook.io/annotation-web-interface-docs/',
             id: nanoid(),
+            category: 1,
             visible: false,
         },
         {
             name: 'Project 2',
             url: 'https://nccr-liri.gitbook.io/annotation-web-interface-docs/',
             id: nanoid(),
+            category: 1,
             visible: false,
         },
         {
             name: 'Project 3',
             url: 'https://nccr-liri.gitbook.io/annotation-web-interface-docs/',
             id: nanoid(),
+            category: 1,
+            visible: false,
+        },
+        {
+            name: 'Project A',
+            url: 'https://nccr-liri.gitbook.io/annotation-web-interface-docs/',
+            id: nanoid(),
+            category: 2,
+            visible: false,
+        },
+        {
+            name: 'Project B',
+            url: 'https://nccr-liri.gitbook.io/annotation-web-interface-docs/',
+            id: nanoid(),
+            category: 2,
+            visible: false,
+        },
+        {
+            name: 'Project C',
+            url: 'https://nccr-liri.gitbook.io/annotation-web-interface-docs/',
+            id: nanoid(),
+            category: 3,
             visible: false,
         }
     ]);
 
-    const visibleProjectId = projects.find(project => project.visible)?.id || null;
-
+    const visibleProject = projects.find(project => project.visible);
     const [searchbarInput, setSearchbarInput] = useState('');
 
-    const toggleGitbookVisibility = (projectId: string) => {
-        const updatedProjects = projects.map(project => {
-            if (projectId === project.id) {
-                return { ...project, visible: !project.visible };
-            }
-            return { ...project, visible: false };
-        });
-
-        setProjects(updatedProjects);
+    const toggleGitbookVisibility = (projectId) => {
+        setProjects(projects.map(project =>
+            project.id === projectId
+                ? { ...project, visible: !project.visible }
+                : { ...project, visible: false }
+        ));
     };
 
-    const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const closeGitbook = () => {
+        // Hide all Gitbooks and re-render project lists
+        setProjects(projects.map(project => ({ ...project, visible: false })));
+    };
+
+    const handleInputChange = (event) => {
         const inputValue = event.target.value;
         setSearchbarInput(inputValue);
     };
@@ -63,54 +84,69 @@ function App() {
                 onChange={handleInputChange}
                 placeholder="Search projects"
             />
-            {
-                filteredProjects.length > 0 ? (
-                    filteredProjects.map(project => {
-                        // If no project is visible, render all projects without the iframe
-                        if (!visibleProjectId) {
-                            return (
-                                <div key={project.id} className='project-container'>
-                                    <div className='name-and-button-container'>
-                                        <p>{project.name}</p>
-                                        <button
-                                            className='project-btn'
-                                            onClick={() => toggleGitbookVisibility(project.id)}
-                                        >
-                                            {project.visible ? '▼' : '▶'}
-                                        </button>
-                                    </div>
-                                </div>
-                            );
-                        }
-                        // If a specific project is visible, render only that project with the iframe
-                        if (visibleProjectId === project.id) {
-                            return (
-                                <div key={project.id} className='project-container'>
-                                    <div className='name-and-button-container'>
-                                        <p>{project.name}</p>
-                                        <button
-                                            className='project-btn'
-                                            onClick={() => toggleGitbookVisibility(project.id)}
-                                        >
-                                            {project.visible ? '▼' : '▶'}
-                                        </button>
-                                    </div>
-                                    {project.visible && (
-                                        <iframe
-                                            src={project.url}
-                                            allowFullScreen
-                                        />
-                                    )}
-                                </div>
-                            );
-                        }
-                        return null; // Skip rendering other projects when a specific project is visible
-                    })
-                ) : (
-                    <p className='project-not-found-message'>No projects found.</p>
-                )
-            }
 
+            <div id='all-categories'>
+                {/* When no project is visible, show the categories */}
+                {!visibleProject && (
+                    <>
+                        {/* Category 1 */}
+                        <div className='category'>
+                            <h2>Category 1</h2>
+                            {filteredProjects
+                                .filter(project => project.category === 1)
+                                .map(project => (
+                                    <div key={project.id} className='project-container'>
+                                        <div className='name-and-button-container'>
+                                            <p>{project.name}</p>
+                                            <button
+                                                className='project-btn'
+                                                onClick={() => toggleGitbookVisibility(project.id)}
+                                            >
+                                                {project.visible ? '▼' : '▶'}
+                                            </button>
+                                        </div>
+                                    </div>
+                                ))
+                            }
+                        </div>
+
+                        {/* Category 2 */}
+                        <div className='category'>
+                            <h2>Category 2</h2>
+                            {filteredProjects
+                                .filter(project => project.category === 2)
+                                .map(project => (
+                                    <div key={project.id} className='project-container'>
+                                        <div className='name-and-button-container'>
+                                            <p>{project.name}</p>
+                                            <button
+                                                className='project-btn'
+                                                onClick={() => toggleGitbookVisibility(project.id)}
+                                            >
+                                                {project.visible ? '▼' : '▶'}
+                                            </button>
+                                        </div>
+                                    </div>
+                                ))
+                            }
+                        </div>
+                    </>
+                )}
+
+                {/* When a project is visible, show only the visible project */}
+                {visibleProject && (
+                    <div id='visible-project'>
+                        <div className='name-and-close-button-container'>
+                            <h2>{visibleProject.name}</h2>
+                            <button onClick={closeGitbook} className='close-btn'>Close Gitbook</button>
+                        </div>
+                        <iframe
+                            src={visibleProject.url}
+                            allowFullScreen
+                        />
+                    </div>
+                )}
+            </div>
         </div>
     );
 }
