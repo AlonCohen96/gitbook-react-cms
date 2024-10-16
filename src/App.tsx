@@ -1,5 +1,5 @@
 import './App.css';
-import React, { useState } from "react";
+import React, {useEffect, useRef, useState} from "react";
 import { nanoid } from "nanoid";
 
 /* to do:
@@ -54,6 +54,7 @@ function App() {
     ]);
 
     const visibleProject = projects.find(project => project.visible);
+    const iframeRef = useRef(null);
     const [searchbarInput, setSearchbarInput] = useState('');
 
     const toggleGitbookVisibility = (projectId: string) => {
@@ -79,6 +80,41 @@ function App() {
         searchbarInput === '' ||
         project.name.toLowerCase().includes(searchbarInput.toLowerCase())
     );
+
+    useEffect(() => {
+        if (visibleProject && iframeRef.current) {
+            const iframe = iframeRef.current;
+
+            const onLoadHandler = () => {
+                try {
+                    const iframeDocument = iframe.contentDocument || iframe.contentWindow.document;
+
+                    // Add event listener for clicks inside the iframe
+                    iframeDocument.addEventListener('click', (event) => {
+                        const target = event.target;
+
+                        // Check if the clicked element is a link
+                        if (target.tagName === 'A' && target.href) {
+                            event.preventDefault(); // Prevent default behavior
+
+                            // Open the link in a new tab
+                            window.open(target.href, '_blank');
+                        }
+                    });
+                } catch (error) {
+                    console.error('Cannot access iframe contents due to cross-origin restrictions.', error);
+                }
+            };
+
+            // Add the load event listener to the iframe
+            iframe.addEventListener('load', onLoadHandler);
+
+            // Cleanup function to remove the listener when the iframe is no longer visible
+            return () => {
+                iframe.removeEventListener('load', onLoadHandler);
+            };
+        }
+    }, [visibleProject]);
 
     return (
         <div id='app-container'>
@@ -153,6 +189,7 @@ function App() {
                             </button>
                         </div>
                         <iframe
+                            ref={iframeRef}
                             src={visibleProject.url}
                             allowFullScreen
                         />
