@@ -54,7 +54,7 @@ function App() {
     ]);
 
     const visibleProject = projects.find(project => project.visible);
-    const iframeRef = useRef(null);
+    const iframeRef = useRef<HTMLIFrameElement | null>(null)
     const [searchbarInput, setSearchbarInput] = useState('');
 
     const toggleGitbookVisibility = (projectId: string) => {
@@ -81,17 +81,22 @@ function App() {
         project.name.toLowerCase().includes(searchbarInput.toLowerCase())
     );
 
+    // This useEffect will be triggered whenever the visibleProject changes
     useEffect(() => {
         if (visibleProject && iframeRef.current) {
             const iframe = iframeRef.current;
 
             const onLoadHandler = () => {
+                if (!iframe) return; // Null check for iframe
+
                 try {
-                    const iframeDocument = iframe.contentDocument || iframe.contentWindow.document;
+                    const iframeDocument = iframe.contentDocument || iframe.contentWindow?.document;
+
+                    if (!iframeDocument) return; // Null check for iframeDocument
 
                     // Add event listener for clicks inside the iframe
-                    iframeDocument.addEventListener('click', (event) => {
-                        const target = event.target;
+                    iframeDocument.addEventListener('click', (event: MouseEvent) => {
+                        const target = event.target as HTMLAnchorElement; // Type the event target
 
                         // Check if the clicked element is a link
                         if (target.tagName === 'A' && target.href) {
@@ -106,12 +111,16 @@ function App() {
                 }
             };
 
-            // Add the load event listener to the iframe
-            iframe.addEventListener('load', onLoadHandler);
+            // Add the load event listener to the iframe if it's not null
+            if (iframe){
+                iframe.addEventListener('load', onLoadHandler);
+            }
 
             // Cleanup function to remove the listener when the iframe is no longer visible
             return () => {
-                iframe.removeEventListener('load', onLoadHandler);
+                if (iframe) { // Null check for iframe before removing listener
+                    iframe.removeEventListener('load', onLoadHandler);
+                }
             };
         }
     }, [visibleProject]);
