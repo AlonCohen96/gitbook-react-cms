@@ -81,28 +81,41 @@ function App() {
         project.name.toLowerCase().includes(searchbarInput.toLowerCase())
     );
 
-    useEffect(() => {
-        const handleLinkClick = (event: MouseEvent) => {
-            const target = event.target as HTMLAnchorElement;
+    seEffect(() => {
+        const iframe = iframeRef.current;
 
-            console.log('got here 1')
+        if (iframe) {
+            const handleLoad = () => {
+                // Once the iframe is loaded, add a click listener to capture link clicks
+                const iframeDocument = iframe.contentDocument || iframe.contentWindow?.document;
 
-            // Check if the clicked element is a link
-            if (target.tagName === 'A' && target.href) {
-                console.log('got here 2')
-                event.preventDefault(); // Prevent default link behavior
-                window.open(target.href, '_blank'); // Open the link in a new tab
+                if (iframeDocument) {
+                    iframeDocument.addEventListener('click', (event) => {
+                        const target = event.target as HTMLElement;
+                        console.log('1')
+
+                        // Check if the clicked element is a link
+                        if (target.tagName === 'A' && target instanceof HTMLAnchorElement) {
+                            console.log('2')
+                            event.preventDefault(); // Prevent the default link behavior
+                            window.open(target.href, '_blank'); // Open the link in a new tab
+                        }
+                    });
+                }
+            };
+
+            if (iframe){
+                iframe.addEventListener('load', handleLoad);
             }
-        };
 
-        // Attach the click event listener to the document
-        document.addEventListener('click', handleLinkClick);
-
-        // Clean up the event listener on component unmount
-        return () => {
-            document.removeEventListener('click', handleLinkClick);
-        };
-    }, []);
+            // Clean up event listeners on component unmount
+            return () => {
+                if (iframe) {
+                    iframe.removeEventListener('load', handleLoad);
+                }
+            };
+        }
+    }, [visibleProject]);
 
     return (
         <div id='app-container'>
