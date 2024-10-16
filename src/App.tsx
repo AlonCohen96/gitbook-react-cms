@@ -81,7 +81,7 @@ function App() {
         project.name.toLowerCase().includes(searchbarInput.toLowerCase())
     );
 
-    seEffect(() => {
+    useEffect(() => {
         const iframe = iframeRef.current;
 
         if (iframe) {
