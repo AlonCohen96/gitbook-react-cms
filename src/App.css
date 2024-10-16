@@ -32,8 +32,29 @@
   font-style: italic;
 }
 
-#searchbar{
+#searchbar {
+  width: 100%;
+  max-width: 400px;
+  padding: 12px 20px;
+  font-size: 16px;
+  border: none;
+  border-radius: 25px;
+  color: #333;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+}
 
+#searchbar::placeholder {
+  color: #aaa;
+  opacity: 1;
+}
+
+#searchbar:focus {
+  outline: none;
+}
+
+#searchbar:hover {
+  box-shadow: 0 2px 7px rgba(0, 0, 0, 0.15); /* Darker shadow on hover */
 }
 
 #all-categories{
