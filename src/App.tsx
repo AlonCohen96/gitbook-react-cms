@@ -1,11 +1,6 @@
 import './App.css';
-import React, {useEffect, useRef, useState} from "react";
+import React, {useState} from "react";
 import { nanoid } from "nanoid";
-
-/* to do:
-    1. make button nicely and more intuitive
-    2. hide search bar when gitbook is open
- */
 
 function App() {
     const [projects, setProjects] = useState([
@@ -68,7 +63,6 @@ function App() {
     ]);
 
     const visibleProject = projects.find(project => project.visible);
-    const iframeRef = useRef<HTMLIFrameElement | null>(null)
     const [searchbarInput, setSearchbarInput] = useState('');
 
     const toggleGitbookVisibility = (projectId: string) => {
@@ -94,32 +88,6 @@ function App() {
         searchbarInput === '' ||
         project.name.toLowerCase().includes(searchbarInput.toLowerCase())
     );
-
-    const modifyLinks = () => {
-        const iframe = iframeRef.current;
-        if (iframe && iframe.contentWindow) {
-            const links = iframe.contentWindow.document.getElementsByTagName('a');
-            for (let link of links) {
-                link.setAttribute('target', '_blank'); // Open links in a new tab
-                link.onclick = (event) => {
-                    event.preventDefault(); // Prevent default link behavior
-                };
-            }
-        }
-    };
-
-    useEffect(() => {
-        const iframe = iframeRef.current;
-        if (iframe) {
-            // Add a load event listener to modify the links
-            iframe.addEventListener('load', modifyLinks);
-        }
-        return () => {
-            if (iframe) {
-                iframe.removeEventListener('load', modifyLinks);
-            }
-        };
-    }, [visibleProject]);
 
     return (
         <div id='app-container'>
@@ -236,10 +204,8 @@ function App() {
                             </button>
                         </div>
                         <iframe
-                            ref={iframeRef}
                             src={visibleProject.url}
                             allowFullScreen
-                            sandbox="allow-scripts allow-same-origin"
                         />
                     </div>
                 )}
