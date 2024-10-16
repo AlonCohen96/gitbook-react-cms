@@ -81,49 +81,38 @@ function App() {
         project.name.toLowerCase().includes(searchbarInput.toLowerCase())
     );
 
-    // This useEffect will be triggered whenever the visibleProject changes
     useEffect(() => {
-        if (visibleProject && iframeRef.current) {
-            const iframe = iframeRef.current;
-
-            const onLoadHandler = () => {
-                if (!iframe) return; // Null check for iframe
-
-                try {
-                    const iframeDocument = iframe.contentDocument || iframe.contentWindow?.document;
-
-                    if (!iframeDocument) return; // Null check for iframeDocument
-
-                    // Add event listener for clicks inside the iframe
-                    iframeDocument.addEventListener('click', (event: MouseEvent) => {
-                        const target = event.target as HTMLAnchorElement; // Type the event target
-
-                        // Check if the clicked element is a link
-                        if (target.tagName === 'A' && target.href) {
-                            event.preventDefault(); // Prevent default behavior
-
-                            // Open the link in a new tab
-                            window.open(target.href, '_blank');
-                        }
-                    });
-                } catch (error) {
-                    console.error('Cannot access iframe contents due to cross-origin restrictions.', error);
-                }
-            };
-
-            // Add the load event listener to the iframe if it's not null
-            if (iframe){
-                iframe.addEventListener('load', onLoadHandler);
+        const handleIframeClick = (event: MouseEvent) => {
+            const target = event.target as HTMLAnchorElement;
+            // Check if the target is an anchor element
+            if (target.tagName === 'A' && target.href) {
+                event.preventDefault(); // Prevent navigation inside the iframe
+                window.open(target.href, '_blank'); // Open the link in a new tab
             }
+        };
 
-            // Cleanup function to remove the listener when the iframe is no longer visible
-            return () => {
-                if (iframe) { // Null check for iframe before removing listener
-                    iframe.removeEventListener('load', onLoadHandler);
+        const iframe = iframeRef.current;
+
+        if (iframe) {
+            // Add click event listener to the parent of iframe
+            iframe.addEventListener('load', () => {
+                try {
+                    // This will fail due to cross-origin, so we try-catch it
+                    const iframeDoc = iframe.contentDocument || iframe.contentWindow?.document;
+                    iframeDoc?.addEventListener('click', handleIframeClick);
+                } catch (error) {
+                    console.warn('Cannot access iframe contents due to cross-origin restrictions.');
                 }
-            };
+            });
         }
-    }, [visibleProject]);
+
+        return () => {
+            // Clean up the event listener when the component is unmounted
+            if (iframe){
+                iframe.removeEventListener('click', handleIframeClick);
+            }
+        };
+    }, []);
 
     return (
         <div id='app-container'>
