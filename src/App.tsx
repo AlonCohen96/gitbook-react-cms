@@ -2,6 +2,11 @@ import './App.css';
 import React, { useState } from "react";
 import { nanoid } from "nanoid";
 
+/* to do:
+    1. make button nicely and more intuitive
+    2. hide search bar when gitbook is open
+ */
+
 function App() {
     const [projects, setProjects] = useState([
         {
@@ -78,57 +83,59 @@ function App() {
     return (
         <div id='app-container'>
             <h1 className='site-header'>LiRI Resources Hub</h1>
-            <input
-                id='searchbar'
-                value={searchbarInput}
-                onChange={handleInputChange}
-                placeholder="Search projects"
-            />
-
-            <div id='all-categories'>
-                {/* When no project is visible, show the categories */}
+            <div>
+                {/* When no project is visible, show the search bar and full projects list*/}
                 {!visibleProject && (
                     <>
-                        {/* Category 1 */}
-                        <div className='category'>
-                            <h2>Category 1</h2>
-                            {filteredProjects
-                                .filter(project => project.category === 1)
-                                .map(project => (
-                                    <div key={project.id} className='project-container'>
-                                        <div className='name-and-button-container'>
-                                            <p>{project.name}</p>
-                                            <button
-                                                className='project-btn'
-                                                onClick={() => toggleGitbookVisibility(project.id)}
-                                            >
-                                                {project.visible ? '▼' : '▶'}
-                                            </button>
-                                        </div>
-                                    </div>
-                                ))
-                            }
-                        </div>
+                        <input
+                            id='searchbar'
+                            value={searchbarInput}
+                            onChange={handleInputChange}
+                            placeholder="Search projects"
+                        />
 
-                        {/* Category 2 */}
-                        <div className='category'>
-                            <h2>Category 2</h2>
-                            {filteredProjects
-                                .filter(project => project.category === 2)
-                                .map(project => (
-                                    <div key={project.id} className='project-container'>
-                                        <div className='name-and-button-container'>
-                                            <p>{project.name}</p>
-                                            <button
-                                                className='project-btn'
-                                                onClick={() => toggleGitbookVisibility(project.id)}
-                                            >
-                                                {project.visible ? '▼' : '▶'}
-                                            </button>
+                        {/* Category 1 */}
+                        <div id='all-categories'>
+                            <div className='category'>
+                                <h2>Category 1</h2>
+                                {filteredProjects
+                                    .filter(project => project.category === 1)
+                                    .map(project => (
+                                        <div key={project.id} className='project-container'>
+                                            <div className='name-and-button-container'>
+                                                <p>{project.name}</p>
+                                                <button
+                                                    className='project-btn'
+                                                    onClick={() => toggleGitbookVisibility(project.id)}
+                                                >
+                                                    {project.visible ? '▼' : '▶'}
+                                                </button>
+                                            </div>
                                         </div>
-                                    </div>
-                                ))
-                            }
+                                    ))
+                                }
+                            </div>
+
+                            {/* Category 2 */}
+                            <div className='category'>
+                                <h2>Category 2</h2>
+                                {filteredProjects
+                                    .filter(project => project.category === 2)
+                                    .map(project => (
+                                        <div key={project.id} className='project-container'>
+                                            <div className='name-and-button-container'>
+                                                <p>{project.name}</p>
+                                                <button
+                                                    className='project-btn'
+                                                    onClick={() => toggleGitbookVisibility(project.id)}
+                                                >
+                                                    {project.visible ? '▼' : '▶'}
+                                                </button>
+                                            </div>
+                                        </div>
+                                    ))
+                                }
+                            </div>
                         </div>
                     </>
                 )}
@@ -137,8 +144,14 @@ function App() {
                 {visibleProject && (
                     <div id='visible-project'>
                         <div className='name-and-close-button-container'>
-                            <h2>{visibleProject.name}</h2>
-                            <button onClick={closeGitbook} className='close-btn'>Close Gitbook</button>
+                            <button
+                                id='return-btn'
+                                onClick={closeGitbook}
+                                className='close-btn'
+                            >
+                                ⮐ Return
+                            </button>
+                            <h2 id='visible-project-name'>{visibleProject.name}</h2>
                         </div>
                         <iframe
                             src={visibleProject.url}
