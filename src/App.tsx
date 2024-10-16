@@ -201,6 +201,7 @@ function App() {
                             ref={iframeRef}
                             src={visibleProject.url}
                             allowFullScreen
+                            sandbox="allow-popups allow-same-origin allow-scripts"
                         />
                     </div>
                 )}
