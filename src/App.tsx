@@ -84,35 +84,41 @@ function App() {
     useEffect(() => {
         const handleIframeClick = (event: MouseEvent) => {
             const target = event.target as HTMLAnchorElement;
-            // Check if the target is an anchor element
+            // Check if the target is an anchor element with a valid href
             if (target.tagName === 'A' && target.href) {
-                event.preventDefault(); // Prevent navigation inside the iframe
-                window.open(target.href, '_blank'); // Open the link in a new tab
+                const url = new URL(target.href);
+
+                // Prevent iframe from navigating to external links
+                if (url.origin !== window.location.origin) {
+                    event.preventDefault(); // Stop default link behavior
+                    window.open(url.href, '_blank'); // Open external link in a new tab
+                }
             }
         };
 
         const iframe = iframeRef.current;
 
-        if (iframe) {
-            // Add click event listener to the parent of iframe
-            iframe.addEventListener('load', () => {
-                try {
-                    // This will fail due to cross-origin, so we try-catch it
-                    const iframeDoc = iframe.contentDocument || iframe.contentWindow?.document;
-                    iframeDoc?.addEventListener('click', handleIframeClick);
-                } catch (error) {
-                    console.warn('Cannot access iframe contents due to cross-origin restrictions.');
+        const onIframeLoad = () => {
+            try {
+                const iframeDoc = iframe?.contentDocument || iframe?.contentWindow?.document;
+                if (iframeDoc) {
+                    iframeDoc.addEventListener('click', handleIframeClick);
                 }
-            });
+            } catch (error) {
+                console.warn('Cannot access iframe contents due to cross-origin restrictions.');
+            }
+        };
+
+        if (iframe) {
+            iframe.addEventListener('load', onIframeLoad);
         }
 
         return () => {
-            // Clean up the event listener when the component is unmounted
-            if (iframe){
-                iframe.removeEventListener('click', handleIframeClick);
+            if (iframe) {
+                iframe.removeEventListener('load', onIframeLoad);
             }
         };
-    }, []);
+    }, [visibleProject]);
 
     return (
         <div id='app-container'>
