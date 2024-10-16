@@ -87,6 +87,7 @@ function App() {
 
             // Check if the clicked element is a link
             if (target.tagName === 'A' && target.href) {
+                console.log('got here')
                 event.preventDefault(); // Prevent default link behavior
                 window.open(target.href, '_blank'); // Open the link in a new tab
             }
