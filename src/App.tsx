@@ -81,35 +81,28 @@ function App() {
         project.name.toLowerCase().includes(searchbarInput.toLowerCase())
     );
 
+    const modifyLinks = () => {
+        const iframe = iframeRef.current;
+        if (iframe && iframe.contentWindow) {
+            const links = iframe.contentWindow.document.getElementsByTagName('a');
+            for (let link of links) {
+                link.setAttribute('target', '_blank'); // Open links in a new tab
+                link.onclick = (event) => {
+                    event.preventDefault(); // Prevent default link behavior
+                };
+            }
+        }
+    };
+
     useEffect(() => {
         const iframe = iframeRef.current;
-
-        const onLoadHandler = () => {
-            if (iframe && iframe.contentWindow) {
-                // Inject a script into the iframe to modify link behavior
-                const script = iframe.contentWindow.document.createElement('script');
-                script.textContent = `
-                    document.addEventListener('click', function(event) {
-                        const target = event.target;
-                        if (target.tagName === 'A' && target.href) {
-                            event.preventDefault(); // Prevent the default click behavior
-                            window.open(target.href, '_blank'); // Open the link in a new tab
-                        }
-                    });
-                `;
-                iframe.contentWindow.document.body.appendChild(script);
-            }
-        };
-
-        // Add the load event listener to the iframe
         if (iframe) {
-            iframe.addEventListener('load', onLoadHandler);
+            // Add a load event listener to modify the links
+            iframe.addEventListener('load', modifyLinks);
         }
-
-        // Cleanup event listener
         return () => {
             if (iframe) {
-                iframe.removeEventListener('load', onLoadHandler);
+                iframe.removeEventListener('load', modifyLinks);
             }
         };
     }, [visibleProject]);
