@@ -151,7 +151,6 @@ function App() {
                             >
                                 ⮐ Return
                             </button>
-                            <h2 id='visible-project-name'>{visibleProject.name}</h2>
                         </div>
                         <iframe
                             src={visibleProject.url}

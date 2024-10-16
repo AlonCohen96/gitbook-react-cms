@@ -39,10 +39,6 @@
 .name-and-close-button-container{
   margin: 20px 0 5px;
 }
-#visible-project-name{
-  margin: 0;
-  font-size: 26px;
-}
 
 #return-btn {
   background-color: white;
