@@ -82,43 +82,24 @@ function App() {
     );
 
     useEffect(() => {
-        const handleIframeClick = (event: MouseEvent) => {
+        const handleLinkClick = (event: MouseEvent) => {
             const target = event.target as HTMLAnchorElement;
-            // Check if the target is an anchor element with a valid href
+
+            // Check if the clicked element is a link
             if (target.tagName === 'A' && target.href) {
-                const url = new URL(target.href);
-
-                // Prevent iframe from navigating to external links
-                if (url.origin !== window.location.origin) {
-                    event.preventDefault(); // Stop default link behavior
-                    window.open(url.href, '_blank'); // Open external link in a new tab
-                }
+                event.preventDefault(); // Prevent default link behavior
+                window.open(target.href, '_blank'); // Open the link in a new tab
             }
         };
 
-        const iframe = iframeRef.current;
+        // Attach the click event listener to the document
+        document.addEventListener('click', handleLinkClick);
 
-        const onIframeLoad = () => {
-            try {
-                const iframeDoc = iframe?.contentDocument || iframe?.contentWindow?.document;
-                if (iframeDoc) {
-                    iframeDoc.addEventListener('click', handleIframeClick);
-                }
-            } catch (error) {
-                console.warn('Cannot access iframe contents due to cross-origin restrictions.');
-            }
-        };
-
-        if (iframe) {
-            iframe.addEventListener('load', onIframeLoad);
-        }
-
+        // Clean up the event listener on component unmount
         return () => {
-            if (iframe) {
-                iframe.removeEventListener('load', onIframeLoad);
-            }
+            document.removeEventListener('click', handleLinkClick);
         };
-    }, [visibleProject]);
+    }, []);
 
     return (
         <div id='app-container'>
@@ -196,7 +177,6 @@ function App() {
                             ref={iframeRef}
                             src={visibleProject.url}
                             allowFullScreen
-                            sandbox="allow-popups allow-same-origin allow-scripts"
                         />
                     </div>
                 )}
