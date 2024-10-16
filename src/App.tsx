@@ -85,9 +85,11 @@ function App() {
         const handleLinkClick = (event: MouseEvent) => {
             const target = event.target as HTMLAnchorElement;
 
+            console.log('got here 1')
+
             // Check if the clicked element is a link
             if (target.tagName === 'A' && target.href) {
-                console.log('got here')
+                console.log('got here 2')
                 event.preventDefault(); // Prevent default link behavior
                 window.open(target.href, '_blank'); // Open the link in a new tab
             }
