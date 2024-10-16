@@ -84,37 +84,34 @@ function App() {
     useEffect(() => {
         const iframe = iframeRef.current;
 
-        if (iframe) {
-            const handleLoad = () => {
-                // Once the iframe is loaded, add a click listener to capture link clicks
-                const iframeDocument = iframe.contentDocument || iframe.contentWindow?.document;
-
-                if (iframeDocument) {
-                    iframeDocument.addEventListener('click', (event) => {
-                        const target = event.target as HTMLElement;
-                        console.log('1')
-
-                        // Check if the clicked element is a link
-                        if (target.tagName === 'A' && target instanceof HTMLAnchorElement) {
-                            console.log('2')
-                            event.preventDefault(); // Prevent the default link behavior
+        const onLoadHandler = () => {
+            if (iframe && iframe.contentWindow) {
+                // Inject a script into the iframe to modify link behavior
+                const script = iframe.contentWindow.document.createElement('script');
+                script.textContent = `
+                    document.addEventListener('click', function(event) {
+                        const target = event.target;
+                        if (target.tagName === 'A' && target.href) {
+                            event.preventDefault(); // Prevent the default click behavior
                             window.open(target.href, '_blank'); // Open the link in a new tab
                         }
                     });
-                }
-            };
-
-            if (iframe){
-                iframe.addEventListener('load', handleLoad);
+                `;
+                iframe.contentWindow.document.body.appendChild(script);
             }
+        };
 
-            // Clean up event listeners on component unmount
-            return () => {
-                if (iframe) {
-                    iframe.removeEventListener('load', handleLoad);
-                }
-            };
+        // Add the load event listener to the iframe
+        if (iframe) {
+            iframe.addEventListener('load', onLoadHandler);
         }
+
+        // Cleanup event listener
+        return () => {
+            if (iframe) {
+                iframe.removeEventListener('load', onLoadHandler);
+            }
+        };
     }, [visibleProject]);
 
     return (
@@ -193,6 +190,7 @@ function App() {
                             ref={iframeRef}
                             src={visibleProject.url}
                             allowFullScreen
+                            sandbox="allow-scripts allow-same-origin"
                         />
                     </div>
                 )}
