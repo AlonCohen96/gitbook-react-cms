@@ -13,39 +13,53 @@ function App() {
             name: 'Annotation Web Interface',
             url: 'https://nccr-liri.gitbook.io/annotation-web-interface-docs/',
             id: nanoid(),
-            category: 1,
-            visible: false,
-        },
-        {
-            name: 'Project 2',
-            url: 'https://nccr-liri.gitbook.io/annotation-web-interface-docs/',
-            id: nanoid(),
-            category: 1,
-            visible: false,
-        },
-        {
-            name: 'Project 3',
-            url: 'https://nccr-liri.gitbook.io/annotation-web-interface-docs/',
-            id: nanoid(),
-            category: 1,
+            category: 4,
             visible: false,
         },
         {
             name: 'Project A',
             url: 'https://nccr-liri.gitbook.io/annotation-web-interface-docs/',
             id: nanoid(),
-            category: 2,
+            category: 1,
             visible: false,
         },
         {
             name: 'Project B',
             url: 'https://nccr-liri.gitbook.io/annotation-web-interface-docs/',
             id: nanoid(),
-            category: 2,
+            category: 1,
             visible: false,
         },
         {
             name: 'Project C',
+            url: 'https://nccr-liri.gitbook.io/annotation-web-interface-docs/',
+            id: nanoid(),
+            category: 2,
+            visible: false,
+        },
+        {
+            name: 'Project D',
+            url: 'https://nccr-liri.gitbook.io/annotation-web-interface-docs/',
+            id: nanoid(),
+            category: 2,
+            visible: false,
+        },
+        {
+            name: 'Catchphrase',
+            url: 'https://nccr-liri.gitbook.io/annotation-web-interface-docs/',
+            id: nanoid(),
+            category: 3,
+            visible: false,
+        },
+        {
+            name: 'Soundscript',
+            url: 'https://nccr-liri.gitbook.io/annotation-web-interface-docs/',
+            id: nanoid(),
+            category: 3,
+            visible: false,
+        },
+        {
+            name: 'Videoscope',
             url: 'https://nccr-liri.gitbook.io/annotation-web-interface-docs/',
             id: nanoid(),
             category: 3,
@@ -124,7 +138,7 @@ function App() {
                         {/* Category 1 */}
                         <div id='all-categories'>
                             <div className='category'>
-                                <h2>Category 1</h2>
+                                <h2>Speech Sciences</h2>
                                 {filteredProjects
                                     .filter(project => project.category === 1)
                                     .map(project => (
@@ -145,9 +159,51 @@ function App() {
 
                             {/* Category 2 */}
                             <div className='category'>
-                                <h2>Category 2</h2>
+                                <h2>EMA Technology</h2>
                                 {filteredProjects
                                     .filter(project => project.category === 2)
+                                    .map(project => (
+                                        <div key={project.id} className='project-container'>
+                                            <div className='name-and-button-container'>
+                                                <p>{project.name}</p>
+                                                <button
+                                                    className='project-btn'
+                                                    onClick={() => toggleGitbookVisibility(project.id)}
+                                                >
+                                                    {project.visible ? '▼' : '▶'}
+                                                </button>
+                                            </div>
+                                        </div>
+                                    ))
+                                }
+                            </div>
+
+                            {/* Category 3 */}
+                            <div className='category'>
+                                <h2>LiRI Corpus Platform</h2>
+                                {filteredProjects
+                                    .filter(project => project.category === 3)
+                                    .map(project => (
+                                        <div key={project.id} className='project-container'>
+                                            <div className='name-and-button-container'>
+                                                <p>{project.name}</p>
+                                                <button
+                                                    className='project-btn'
+                                                    onClick={() => toggleGitbookVisibility(project.id)}
+                                                >
+                                                    {project.visible ? '▼' : '▶'}
+                                                </button>
+                                            </div>
+                                        </div>
+                                    ))
+                                }
+                            </div>
+
+                            {/* Category 4 */}
+                            <div className='category'>
+                                <h2>NCCR@LiRI</h2>
+                                {filteredProjects
+                                    .filter(project => project.category === 4)
                                     .map(project => (
                                         <div key={project.id} className='project-container'>
                                             <div className='name-and-button-container'>
