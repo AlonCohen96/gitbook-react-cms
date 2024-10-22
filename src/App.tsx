@@ -1,15 +1,44 @@
 import './App.css';
-import React, {useState} from "react";
-import { nanoid } from "nanoid";
+import React, { useState } from 'react';
+import { nanoid } from 'nanoid';
+
+// Define the Project interface
+interface Resource {
+    label: string;
+    url: string;
+    id: string;
+}
+
+interface Project {
+    name: string;
+    url: string;
+    id: string;
+    category: number;
+    visible: boolean;
+    resources?: Resource[];  // Make resources optional
+}
 
 function App() {
-    const [projects, setProjects] = useState([
+    // Use the Project[] type in the useState hook
+    const [projects, setProjects] = useState<Project[]>([
         {
             name: 'Annotation Web Interface',
             url: 'https://nccr-liri.gitbook.io/annotation-web-interface-docs/',
             id: nanoid(),
             category: 4,
             visible: false,
+            resources: [
+                {
+                    label: 'GitHub Repo',
+                    url: 'https://github.com/AlonCohen96/react-annotation-interface',
+                    id: nanoid()
+                },
+                {
+                    label: 'Live Demo',
+                    url: 'https://annotation.evolvinglanguage.ch/',
+                    id: nanoid()
+                }
+            ]
         },
         {
             name: 'Project A',
@@ -207,6 +236,20 @@ function App() {
                             src={visibleProject.url}
                             allowFullScreen
                         />
+                        <div id='resources-container'>
+                            {visibleProject.resources && <h3>Additional Resources</h3>}
+                            {
+                                visibleProject.resources?.map(resource => (
+                                    <a
+                                        key={resource.id}
+                                        href={resource.url} target='_blank'
+                                        rel='noopener noreferrer'
+                                    >
+                                        {resource.label}
+                                    </a>
+                                ))
+                            }
+                        </div>
                     </div>
                 )}
             </div>
