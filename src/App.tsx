@@ -15,11 +15,17 @@ interface Project {
     id: string;
     category: number;
     visible: boolean;
-    resources?: Resource[];  // Make resources optional
+    resources?: Resource[];
 }
 
 function App() {
-    // Use the Project[] type in the useState hook
+    const categories = [
+        { id: 1, name: 'Speech Sciences' },
+        { id: 2, name: 'EMA Technology' },
+        { id: 3, name: 'LiRI Corpus Platform' },
+        { id: 4, name: 'NCCR@LiRI' },
+    ];
+
     const [projects, setProjects] = useState<Project[]>([
         {
             name: 'Annotation Web Interface',
@@ -103,16 +109,13 @@ function App() {
     };
 
     const closeGitbook = () => {
-        // Hide all Gitbooks and re-render project lists
         setProjects(projects.map(project => ({ ...project, visible: false })));
     };
 
     const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        const inputValue = event.target.value;
-        setSearchbarInput(inputValue);
+        setSearchbarInput(event.target.value);
     };
 
-    // Filter projects based on search input
     const filteredProjects = projects.filter(project =>
         searchbarInput === '' ||
         project.name.toLowerCase().includes(searchbarInput.toLowerCase())
@@ -122,7 +125,6 @@ function App() {
         <div id='app-container'>
             <h1 className='site-header'>LiRI Resources Hub</h1>
             <div>
-                {/* When no project is visible, show the search bar and full projects list*/}
                 {!visibleProject && (
                     <>
                         <input
@@ -132,95 +134,32 @@ function App() {
                             placeholder="Search projects"
                         />
 
-                        {/* Category 1 */}
                         <div id='all-categories'>
-                            <div className='category'>
-                                <h2>Speech Sciences</h2>
-                                {filteredProjects
-                                    .filter(project => project.category === 1)
-                                    .map(project => (
-                                        <div key={project.id} className='project-container'>
-                                            <div className='name-and-button-container'>
-                                                <p>{project.name}</p>
-                                                <button
-                                                    className='project-btn'
-                                                    onClick={() => toggleGitbookVisibility(project.id)}
-                                                >
-                                                    {project.visible ? '▼' : '▶'}
-                                                </button>
+                            {categories.map(category => (
+                                <div key={category.id} className='category'>
+                                    <h2>{category.name}</h2>
+                                    {filteredProjects
+                                        .filter(project => project.category === category.id)
+                                        .map(project => (
+                                            <div key={project.id} className='project-container'>
+                                                <div className='name-and-button-container'>
+                                                    <p>{project.name}</p>
+                                                    <button
+                                                        className='project-btn'
+                                                        onClick={() => toggleGitbookVisibility(project.id)}
+                                                    >
+                                                        {project.visible ? '▼' : '▶'}
+                                                    </button>
+                                                </div>
                                             </div>
-                                        </div>
-                                    ))
-                                }
-                            </div>
-
-                            {/* Category 2 */}
-                            <div className='category'>
-                                <h2>EMA Technology</h2>
-                                {filteredProjects
-                                    .filter(project => project.category === 2)
-                                    .map(project => (
-                                        <div key={project.id} className='project-container'>
-                                            <div className='name-and-button-container'>
-                                                <p>{project.name}</p>
-                                                <button
-                                                    className='project-btn'
-                                                    onClick={() => toggleGitbookVisibility(project.id)}
-                                                >
-                                                    {project.visible ? '▼' : '▶'}
-                                                </button>
-                                            </div>
-                                        </div>
-                                    ))
-                                }
-                            </div>
-
-                            {/* Category 3 */}
-                            <div className='category'>
-                                <h2>LiRI Corpus Platform</h2>
-                                {filteredProjects
-                                    .filter(project => project.category === 3)
-                                    .map(project => (
-                                        <div key={project.id} className='project-container'>
-                                            <div className='name-and-button-container'>
-                                                <p>{project.name}</p>
-                                                <button
-                                                    className='project-btn'
-                                                    onClick={() => toggleGitbookVisibility(project.id)}
-                                                >
-                                                    {project.visible ? '▼' : '▶'}
-                                                </button>
-                                            </div>
-                                        </div>
-                                    ))
-                                }
-                            </div>
-
-                            {/* Category 4 */}
-                            <div className='category'>
-                                <h2>NCCR@LiRI</h2>
-                                {filteredProjects
-                                    .filter(project => project.category === 4)
-                                    .map(project => (
-                                        <div key={project.id} className='project-container'>
-                                            <div className='name-and-button-container'>
-                                                <p>{project.name}</p>
-                                                <button
-                                                    className='project-btn'
-                                                    onClick={() => toggleGitbookVisibility(project.id)}
-                                                >
-                                                    {project.visible ? '▼' : '▶'}
-                                                </button>
-                                            </div>
-                                        </div>
-                                    ))
-                                }
-                            </div>
+                                        ))
+                                    }
+                                </div>
+                            ))}
                         </div>
                     </>
                 )}
 
-                {/* When a project is visible, show only the visible project */}
                 {visibleProject && (
                     <div id='visible-project'>
                         <div className='name-and-close-button-container'>
@@ -238,17 +177,16 @@ function App() {
                         />
                         <div id='resources-container'>
                             {visibleProject.resources && <h3>Additional Resources</h3>}
-                            {
-                                visibleProject.resources?.map(resource => (
-                                    <a
-                                        key={resource.id}
-                                        href={resource.url} target='_blank'
-                                        rel='noopener noreferrer'
-                                    >
-                                        {resource.label}
-                                    </a>
-                                ))
-                            }
+                            {visibleProject.resources?.map(resource => (
+                                <a
+                                    key={resource.id}
+                                    href={resource.url}
+                                    target='_blank'
+                                    rel='noopener noreferrer'
+                                >
+                                    {resource.label}
+                                </a>
+                            ))}
                         </div>
                     </div>
                 )}
