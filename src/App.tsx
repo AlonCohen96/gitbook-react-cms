@@ -130,9 +130,9 @@ function App() {
                                         <p
                                             className='project-title'
                                             onClick={() => window.open(project.url, '_blank')}
-                                            style={{ cursor: 'pointer', color: 'blue', textDecoration: 'underline' }}
+                                            style={{ cursor: 'pointer'}}
                                         >
-                                            {project.name}
+                                            {project.name} 🗗
                                         </p>
                                     </div>
                                 ))
