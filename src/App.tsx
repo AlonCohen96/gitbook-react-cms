@@ -33,46 +33,6 @@ function App() {
             id: nanoid(),
             category: 4,
             visible: false,
-            resources: [
-                {
-                    label: 'GitHub Repo',
-                    url: 'https://github.com/AlonCohen96/react-annotation-interface',
-                    id: nanoid()
-                },
-                {
-                    label: 'Live Demo',
-                    url: 'https://annotation.evolvinglanguage.ch/',
-                    id: nanoid()
-                }
-            ]
-        },
-        {
-            name: 'Project A',
-            url: 'https://nccr-liri.gitbook.io/annotation-web-interface-docs/',
-            id: nanoid(),
-            category: 1,
-            visible: false,
-        },
-        {
-            name: 'Project B',
-            url: 'https://nccr-liri.gitbook.io/annotation-web-interface-docs/',
-            id: nanoid(),
-            category: 1,
-            visible: false,
-        },
-        {
-            name: 'Project C',
-            url: 'https://nccr-liri.gitbook.io/annotation-web-interface-docs/',
-            id: nanoid(),
-            category: 2,
-            visible: false,
-        },
-        {
-            name: 'Project D',
-            url: 'https://nccr-liri.gitbook.io/annotation-web-interface-docs/',
-            id: nanoid(),
-            category: 2,
-            visible: false,
         },
         {
             name: 'Catchphrase',
@@ -120,26 +80,34 @@ function App() {
                 />
 
                 <div id='all-categories'>
-                    {categories.map(category => (
-                        <div key={category.id} className='category'>
-                            <h2>{category.name}</h2>
-                            {filteredProjects
-                                .filter(project => project.category === category.id)
-                                .map(project => (
-                                    <div key={project.id} className='project-container'>
-                                        <p
-                                            className='project-title'
-                                            onClick={() => window.open(project.url, '_blank')}
-                                            style={{ cursor: 'pointer'}}
-                                        >
-                                            {project.name} ➤
-                                        </p>
-                                    </div>
-                                ))
-                            }
-                        </div>
-                    ))}
+                    {categories.map(category => {
+                        const projectsForCategory = filteredProjects.filter(
+                            project => project.category === category.id
+                        );
+
+                        return (
+                            <div key={category.id} className='category'>
+                                <h2>{category.name}</h2>
+                                {projectsForCategory.length > 0 ? (
+                                    projectsForCategory.map(project => (
+                                        <div key={project.id} className='project-container'>
+                                            <p
+                                                className='project-title'
+                                                onClick={() => window.open(project.url, '_blank')}
+                                                style={{ cursor: 'pointer' }}
+                                            >
+                                                {project.name} ➤
+                                            </p>
+                                        </div>
+                                    ))
+                                ) : (
+                                    <p>More coming soon.</p>
+                                )}
+                            </div>
+                        );
+                    })}
                 </div>
+
             </div>
         </div>
     );
