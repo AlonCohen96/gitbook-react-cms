@@ -81,6 +81,12 @@ function App() {
 
                 <div id='all-categories'>
                     {categories.map(category => {
+                        // Check if the category has any projects in the full list
+                        const allProjectsForCategory = projects.filter(
+                            project => project.category === category.id
+                        );
+
+                        // Filter projects for the current search query
                         const projectsForCategory = filteredProjects.filter(
                             project => project.category === category.id
                         );
@@ -88,26 +94,29 @@ function App() {
                         return (
                             <div key={category.id} className='category'>
                                 <h2>{category.name}</h2>
-                                {projectsForCategory.length > 0 ? (
-                                    projectsForCategory.map(project => (
-                                        <div key={project.id} className='project-container'>
-                                            <p
-                                                className='project-title'
-                                                onClick={() => window.open(project.url, '_blank')}
-                                                style={{ cursor: 'pointer' }}
-                                            >
-                                                {project.name} ➤
-                                            </p>
-                                        </div>
-                                    ))
-                                ) : (
+                                {allProjectsForCategory.length === 0 ? (
                                     <p>More coming soon.</p>
+                                ) : (
+                                    projectsForCategory.length > 0 ? (
+                                        projectsForCategory.map(project => (
+                                            <div key={project.id} className='project-container'>
+                                                <p
+                                                    className='project-title'
+                                                    onClick={() => window.open(project.url, '_blank')}
+                                                    style={{ cursor: 'pointer' }}
+                                                >
+                                                    {project.name} ➤
+                                                </p>
+                                            </div>
+                                        ))
+                                    ) : (
+                                        <p>No matching projects found.</p>
+                                    )
                                 )}
                             </div>
                         );
                     })}
                 </div>
-
             </div>
         </div>
     );
