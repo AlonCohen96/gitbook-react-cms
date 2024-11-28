@@ -99,7 +99,7 @@ function App() {
                                 ) : (
                                     projectsForCategory.length > 0 ? (
                                         projectsForCategory.map(project => (
-                                            <div key={project.id} className='project-container'>
+                                            <p key={project.id} className='project-container'>
                                                 <p
                                                     className='project-title'
                                                     onClick={() => window.open(project.url, '_blank')}
@@ -107,7 +107,7 @@ function App() {
                                                 >
                                                     {project.name} ➤
                                                 </p>
-                                            </div>
+                                            </p>
                                         ))
                                     ) : (
                                         <p>No matching projects found.</p>
