@@ -1,12 +1,17 @@
 /* ++++++++++++++++++++++++++++++++++++++++++++++++ App Large Screens ++++++++++++++++++++++++++++++++++++++++++++++++ */
 
 #all-categories{
+  width: 688px;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
 }
 
 .category{
   margin: 0 50px 0 0;
+}
+
+.category > h2, .project-container > .project-title{
+  white-space: nowrap;
 }
 
 /* ++++++++++++++++++++++++++++++++++++++++++++++++ App Mobile ++++++++++++++++++++++++++++++++++++++++++++++++ */
