@@ -3,18 +3,11 @@ import React, { useState } from 'react';
 import { nanoid } from 'nanoid';
 
 // Define the Project interface
-interface Resource {
-    label: string;
-    url: string;
-    id: string;
-}
-
 interface Project {
     name: string;
     url: string;
     id: string;
     category: number;
-    resources?: Resource[];
 }
 
 function App() {
@@ -90,7 +83,7 @@ function App() {
                             <div key={category.id} className='category'>
                                 <h2>{category.name}</h2>
                                 {allProjectsForCategory.length === 0 ? (
-                                    <p>More coming soon.</p>
+                                    <p className='placeholder-message'>More coming soon.</p>
                                 ) : (
                                     projectsForCategory.length > 0 ? (
                                         projectsForCategory.map(project => (

@@ -62,4 +62,10 @@
   box-shadow: 0 2px 7px rgba(0, 0, 0, 0.15); /* Darker shadow on hover */
 }
 
+/* ++++++++++++++++++++++++++++++++++++++++++++++++ General ++++++++++++++++++++++++++++++++++++++++++++++++ */
+
+.placeholder-message{
+  font-style: italic;
+}
+
 
