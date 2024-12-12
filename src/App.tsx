@@ -1,49 +1,10 @@
 import './App.css';
 import React, { useState } from 'react';
-import { nanoid } from 'nanoid';
-
-// Define the Project interface
-interface Project {
-    name: string;
-    url: string;
-    id: string;
-    category: number;
-}
+import { categories, projects, Project } from './assets/metadata';
 
 function App() {
-    const categories = [
-        { id: 1, name: 'Speech Sciences' },
-        { id: 2, name: 'EMA Technology' },
-        { id: 3, name: 'LiRI Corpus Platform' },
-        { id: 4, name: 'NCCR@LiRI' },
-    ];
 
-    const [projects] = useState<Project[]>([
-        {
-            name: 'Annotation Web Interface',
-            url: 'https://nccr-liri.gitbook.io/annotation-web-interface-docs/',
-            id: nanoid(),
-            category: 4,
-        },
-        {
-            name: 'Catchphrase',
-            url: 'https://lcp.linguistik.uzh.ch/manual/catchphrase.html',
-            id: nanoid(),
-            category: 3,
-        },
-        {
-            name: 'Soundscript',
-            url: 'https://lcp.linguistik.uzh.ch/manual/soundscript.html',
-            id: nanoid(),
-            category: 3,
-        },
-        {
-            name: 'Videoscope',
-            url: 'https://lcp.linguistik.uzh.ch/manual/videoscope.html',
-            id: nanoid(),
-            category: 3,
-        }
-    ]);
+    const [projectsList] = useState<Project[]>(projects);
 
     const [searchbarInput, setSearchbarInput] = useState('');
 
@@ -51,7 +12,7 @@ function App() {
         setSearchbarInput(event.target.value);
     };
 
-    const filteredProjects = projects.filter(project =>
+    const filteredProjects = projectsList.filter(project =>
         searchbarInput === '' ||
         project.name.toLowerCase().includes(searchbarInput.toLowerCase())
     );
@@ -70,7 +31,7 @@ function App() {
                 <div id='all-categories'>
                     {categories.map(category => {
                         // Check if the category has any projects in the full list
-                        const allProjectsForCategory = projects.filter(
+                        const allProjectsForCategory = projectsList.filter(
                             project => project.category === category.id
                         );
 
