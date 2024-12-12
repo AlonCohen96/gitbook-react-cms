@@ -14,7 +14,6 @@ interface Project {
     url: string;
     id: string;
     category: number;
-    visible: boolean;
     resources?: Resource[];
 }
 
@@ -32,28 +31,24 @@ function App() {
             url: 'https://nccr-liri.gitbook.io/annotation-web-interface-docs/',
             id: nanoid(),
             category: 4,
-            visible: false,
         },
         {
             name: 'Catchphrase',
             url: 'https://lcp.linguistik.uzh.ch/manual/catchphrase.html',
             id: nanoid(),
             category: 3,
-            visible: false,
         },
         {
             name: 'Soundscript',
             url: 'https://lcp.linguistik.uzh.ch/manual/soundscript.html',
             id: nanoid(),
             category: 3,
-            visible: false,
         },
         {
             name: 'Videoscope',
             url: 'https://lcp.linguistik.uzh.ch/manual/videoscope.html',
             id: nanoid(),
             category: 3,
-            visible: false,
         }
     ]);
 
@@ -72,13 +67,14 @@ function App() {
         <div id='app-container'>
             <h1 className='site-header'>LiRI Resources Hub</h1>
             <div>
+                {/*
                 <input
                     id='searchbar'
                     value={searchbarInput}
                     onChange={handleInputChange}
                     placeholder="Search projects"
                 />
-
+                */}
                 <div id='all-categories'>
                     {categories.map(category => {
                         // Check if the category has any projects in the full list
