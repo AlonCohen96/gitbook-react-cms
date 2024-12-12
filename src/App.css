@@ -1,20 +1,30 @@
-#app-container{
-  /*margin: 0 10%;*/
-}
+/* ++++++++++++++++++++++++++++++++++++++++++++++++ App Large Screens ++++++++++++++++++++++++++++++++++++++++++++++++ */
 
 #all-categories{
   display: flex;
 }
 
-@media screen and (max-width: 992px) {
-  #app-container {
-    /*argin: 0 16px;*/
-  }
+.category{
+  margin: 0 50px 0 0;
+}
 
+/* ++++++++++++++++++++++++++++++++++++++++++++++++ App Mobile ++++++++++++++++++++++++++++++++++++++++++++++++ */
+
+@media screen and (max-width: 992px) {
   #all-categories{
     flex-direction: column;
   }
+
+  .category{
+    margin: 0;
+  }
+
+  .category > h2:first-child {
+    margin-top: 0;
+  }
 }
+
+/* ++++++++++++++++++++++++++++++++++++++++++++++++ Search Bar ++++++++++++++++++++++++++++++++++++++++++++++++ */
 
 .site-header{
   width: fit-content;
@@ -46,6 +56,3 @@
 }
 
 
-.category{
-  margin: 0 50px 0 0;
-}
