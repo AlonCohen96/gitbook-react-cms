@@ -1,7 +1,8 @@
 /* ++++++++++++++++++++++++++++++++++++++++++++++++ App Large Screens ++++++++++++++++++++++++++++++++++++++++++++++++ */
 
 #all-categories{
-  display: flex;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
 }
 
 .category{
@@ -12,6 +13,7 @@
 
 @media screen and (max-width: 992px) {
   #all-categories{
+    display: flex;
     flex-direction: column;
   }
 
@@ -19,7 +21,7 @@
     margin: 0;
   }
 
-  .category > h2:first-child {
+  .category:first-child > h2 {
     margin-top: 0;
   }
 }
