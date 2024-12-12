@@ -66,14 +66,14 @@ function App() {
     return (
         <div id='app-container'>
             <div>
-                {/*
+                {false &&
                 <input
                     id='searchbar'
                     value={searchbarInput}
                     onChange={handleInputChange}
                     placeholder="Search projects"
                 />
-                */}
+                }
                 <div id='all-categories'>
                     {categories.map(category => {
                         // Check if the category has any projects in the full list
