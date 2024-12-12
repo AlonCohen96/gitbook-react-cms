@@ -65,7 +65,6 @@ function App() {
 
     return (
         <div id='app-container'>
-            <h1 className='site-header'>LiRI Resources Hub</h1>
             <div>
                 {/*
                 <input

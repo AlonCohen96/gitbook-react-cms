@@ -1,12 +1,18 @@
 #app-container{
-  margin: 0 10%;
+  /*margin: 0 10%;*/
 }
 
-/* On screens that are 992px or less, set the background color to blue */
+#all-categories{
+  display: flex;
+}
+
 @media screen and (max-width: 992px) {
   #app-container {
-    background-color: blue;
-    margin: 0 10%;
+    /*argin: 0 16px;*/
+  }
+
+  #all-categories{
+    flex-direction: column;
   }
 }
 
@@ -39,9 +45,6 @@
   box-shadow: 0 2px 7px rgba(0, 0, 0, 0.15); /* Darker shadow on hover */
 }
 
-#all-categories{
-  display: flex;
-}
 
 .category{
   margin: 0 50px 0 0;
