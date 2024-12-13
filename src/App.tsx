@@ -89,7 +89,7 @@ function App() {
                                                     onClick={() => window.open(project.url, '_blank')}
                                                     style={{ cursor: 'pointer' }}
                                                 >
-                                                    {project.name} ➤
+                                                    ➤ {project.name}
                                                 </p>
                                             </p>
                                         ))
