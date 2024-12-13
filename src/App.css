@@ -3,7 +3,7 @@
 #all-categories{
   width: 688px;
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(2, 1fr);
 }
 
 .category{
@@ -16,7 +16,7 @@
 
 /* ++++++++++++++++++++++++++++++++++++++++++++++++ App Mobile ++++++++++++++++++++++++++++++++++++++++++++++++ */
 
-@media screen and (max-width: 992px) {
+@media screen and (max-width: 700px) {
   #all-categories{
     display: flex;
     flex-direction: column;
